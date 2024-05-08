@@ -5,10 +5,9 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import conta.controller.ContaController;
-import conta.model.Conta;
 import conta.util.Cores;
 import conta.model.ContaCorrente;
-import conta.model.ContaPoupanca;
+
 
 public class Menu {
 	public static void main(String[] args) throws Exception {
@@ -20,24 +19,16 @@ public class Menu {
 		String titular;
 		float saldo, limite, valor;
 
-		// Instância da Classe ContaController
+		// Instância da Classe ContaCorrente
 		ContaController contas = new ContaController();
-//
-//		System.out.println("\nCriar Contas\n");
-//
-//		ContaCorrente cc1 = new ContaCorrente(contas.gerarNumero(), 123, 1, "João da Silva", 1000f, 100.0f);
-//		contas.cadastrar(cc1);
-//
-//		ContaCorrente cc2 = new ContaCorrente(contas.gerarNumero(), 124, 1, "Maria da Silva", 2000f, 100.0f);
-//		contas.cadastrar(cc2);
-//
-//		ContaPoupanca cp1 = new ContaPoupanca(contas.gerarNumero(), 125, 2, "Mariana dos Santos", 4000f, 12);
-//		contas.cadastrar(cp1);
-//
-//		ContaPoupanca cp2 = new ContaPoupanca(contas.gerarNumero(), 125, 2, "Juliana Ramos", 8000f, 15);
-//		contas.cadastrar(cp2);
-//
-//		contas.listarTodas();
+
+		System.out.println("\nCriar Contas\n");
+
+		ContaCorrente cc3 = new ContaCorrente(1, "Renan Ramos");
+		
+		ContaCorrente cc4 = new ContaCorrente(2, "Maria");
+
+		contas.listarTodas();
 
 		while (true) {
 
@@ -76,50 +67,27 @@ public class Menu {
 
 			switch (opcao) {
 				case 1:
-					System.out.println(Cores.TEXT_WHITE + "Criar Conta\n\n");
+					System.out.println(Cores.TEXT_WHITE + "Criar Produtos\n\n");
 
-					System.out.println("Digite o Numero da Agência: ");
-					agencia = leia.nextInt();
-					System.out.println("Digite o Nome do Titular: ");
+					System.out.println("Digite o id do produto: ");
+					numero = leia.nextInt();
+					System.out.println("Digite o Nome do produto: "); 
 					leia.skip("\\R?");
 					titular = leia.nextLine();
-
-					do {
-						System.out.println("Digite o Tipo da Conta (1-CC ou 2-CP): ");
-						tipo = leia.nextInt();
-					} while (tipo < 1 && tipo > 2);
-
-					System.out.println("Digite o Saldo da Conta (R$): ");
-					saldo = leia.nextFloat();
-
-					switch (tipo) {
-						case 1 -> {
-							System.out.println("Digite o Limite de Crédito (R$): ");
-							limite = leia.nextFloat();
-							contas.cadastrar(
-									new ContaCorrente(contas.gerarNumero(), agencia, tipo, titular, saldo, limite));
-						}
-						case 2 -> {
-							System.out.println("Digite o dia do Aniversario da Conta: ");
-							aniversario = leia.nextInt();
-							contas.cadastrar(new ContaPoupanca(contas.gerarNumero(), agencia, tipo, titular, saldo,
-									aniversario));
-						}
-					}
 
 					keyPress();
 					break;
 				case 2:
-					System.out.println(Cores.TEXT_WHITE + "Listar todas as Contas\n\n");
+					System.out.println(Cores.TEXT_WHITE + "Listar todos os Produtos\n\n");
 
 					contas.listarTodas();
 
 					keyPress();
 					break;
 				case 3:
-					System.out.println(Cores.TEXT_WHITE + "Buscar Conta por número\n\n");
+					System.out.println(Cores.TEXT_WHITE + "Buscar Produto por ID\n\n");
 
-					System.out.println("Digite o número da conta: ");
+					System.out.println("Digite o número do Produto: "); //ID
 					numero = leia.nextInt();
 
 					contas.procurarPorNumero(numero);
@@ -127,51 +95,33 @@ public class Menu {
 					keyPress();
 					break;
 				case 4:
-					System.out.println(Cores.TEXT_WHITE + "Atualizar dados da Conta\n\n");
+					System.out.println(Cores.TEXT_WHITE + "Atualizar informações do produto\n\n");
 
-					System.out.println("Digite o número da conta: ");
+					System.out.println("Digite o número do Produto: "); //ID
 					numero = leia.nextInt();
 
 					var buscaConta = contas.buscarNaCollection(numero);
 
 					if (buscaConta != null) {
 
-						System.out.println("Digite o Numero da Agência: ");
+						System.out.println("Digite o ID do Produto: "); // pegar digitar o numero da agencia 
 						agencia = leia.nextInt();
-						System.out.println("Digite o Nome do Titular: ");
+						
+						System.out.println("Digite o Nome Produto: ");
 						leia.skip("\\R?");
 						titular = leia.nextLine();
 
-						System.out.println("Digite o Saldo da Conta (R$): ");
-						saldo = leia.nextFloat();
-
-						tipo = buscaConta.getTipo();
-
-						switch (tipo) {
-							case 1 -> {
-								System.out.println("Digite o Limite de Crédito (R$): ");
-								limite = leia.nextFloat();
-								contas.atualizar(new ContaCorrente(numero, agencia, tipo, titular, saldo, limite));
-							}
-							case 2 -> {
-								System.out.println("Digite o dia do Aniversario da Conta: ");
-								aniversario = leia.nextInt();
-								contas.atualizar(new ContaPoupanca(numero, agencia, tipo, titular, saldo, aniversario));
-							}
-							default -> {
-								System.out.println("Tipo de conta inválido!");
-							}
-						}
+						tipo = buscaConta.getNumero();
 
 					} else
-						System.out.println("\nConta não encontrada!");
+						System.out.println("\nProduto não encontrada!");
 
 					keyPress();
 					break;
 				case 5:
 					System.out.println(Cores.TEXT_WHITE + "Apagar a Conta\n\n");
 
-					System.out.println("Digite o número da conta: ");
+					System.out.println("Digite o ID do Produto: ");
 					numero = leia.nextInt();
 
 					contas.deletar(numero);

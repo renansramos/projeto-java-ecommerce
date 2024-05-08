@@ -17,7 +17,7 @@ public class ContaController implements ContaRepository {
 		if (conta != null)
 			conta.visualizar();
 		else
-			System.out.println("\nA Conta número: " + numero + " não foi encontrada!");
+			System.out.println("\nO Produto: " + numero + " não foi encontrado!");
     }
 
     @Override
@@ -30,7 +30,7 @@ public class ContaController implements ContaRepository {
     @Override
     public void cadastrar(Conta conta) {
 		listaContas.add(conta);
-		System.out.println("\nA Conta número: " + conta.getNumero() + " foi criada com sucesso!");
+		System.out.println("\nO Produto: " + conta.getNumero() + " foi criado com sucesso!");
     }
 
     @Override
@@ -39,9 +39,9 @@ public class ContaController implements ContaRepository {
 		
 		if (buscaConta != null) {
 			listaContas.set(listaContas.indexOf(buscaConta), conta);
-			System.out.println("\nA Conta numero: " + conta.getNumero() + " foi atualizada com sucesso!");
+			System.out.println("\nO Produto: " + conta.getNumero() + " foi atualizado com sucesso!");
 		}else
-			System.out.println("\nA Conta numero: " + conta.getNumero() + " não foi encontrada!");
+			System.out.println("\nO Produto: " + conta.getNumero() + " não foi encontrado!");
     }
 
     @Override
@@ -50,49 +50,9 @@ public class ContaController implements ContaRepository {
 		
 		if (conta != null) {
 			if(listaContas.remove(conta) == true)
-				System.out.println("\nA Conta numero: " + numero + " foi deletada com sucesso!");
+				System.out.println("\nO produto: " + numero + " foi deletado com sucesso!");
 		}else
-			System.out.println("\nA Conta numero: " + numero + " não foi encontrada!");
-    }
-
-    @Override
-    public void sacar(int numero, float valor) {
-        var conta = buscarNaCollection(numero);
-		
-		if (conta != null) {
-			
-			if(conta.sacar(valor) == true)
-				System.out.println("\nO Saque na Conta numero: " + numero + " foi efetuado com sucesso!");		
-		
-		}else
-			System.out.println("\nA Conta numero: " + numero + " não foi encontrada!");
-        
-    }
-
-    @Override
-    public void depositar(int numero, float valor) {
-        var conta = buscarNaCollection(numero);
-		
-		if (conta != null) {
-			conta.depositar(valor);
-			System.out.println("\nO Depósito na Conta numero: " + numero + " foi efetuado com sucesso!");
-		}else
-			System.out.println("\nA Conta numero: " + numero + " não foi encontrada ou a Conta destino não é uma Conta Corrente!");
-    }
-
-    @Override
-    public void transferir(int numeroOrigem, int numeroDestino, float valor) {
-        var contaOrigem = buscarNaCollection(numeroOrigem);
-		var contaDestino = buscarNaCollection(numeroDestino);
-
-		if (contaOrigem != null && contaDestino != null) {
-							
-				if (contaOrigem.sacar(valor) == true) {
-					contaDestino.depositar(valor);
-					System.out.println("\nA Transferência foi efetuado com sucesso!");
-				}
-		}else
-			System.out.println("\nA Conta de Origem e/ou Destino não foram encontradas!");
+			System.out.println("\nO produto: " + numero + " não foi encontrado!");
     }
 
 	public int gerarNumero() {
